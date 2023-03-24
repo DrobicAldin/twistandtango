@@ -6,7 +6,7 @@
   "main": "dist/main.js",
   "scripts": {
     "start": "http-server ./dist -p 4173 --cors='*' -c-1",
-    "dev": "SERVE=true vite build --watch",
+    "dev": "concurrently \"nodemon --exec 'DEVELOPMENT=true vite build' --watch ./src -e js,ts,svelte\" \"npm run start\"",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
@@ -19,10 +19,9 @@
     "@sveltejs/vite-plugin-svelte": "^2.0.3",
     "@tsconfig/svelte": "^3.0.0",
     "autoprefixer": "^10.4.14",
-    "child_process": "^1.0.2",
     "concurrently": "^7.6.0",
-    "detect-package-manager": "^2.0.1",
     "http-server": "^14.1.1",
+    "nodemon": "^2.0.22",
     "postcss": "^8.4.21",
     "request-ip": "^3.3.0",
     "rollup-plugin-livereload": "^2.0.5",

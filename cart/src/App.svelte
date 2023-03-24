@@ -3,6 +3,7 @@
   import CartItem from './CartItem.svelte';
   import { onMount } from 'svelte';
   import { culture } from './translations';
+  import Logo from './Logo.svelte';
 
   export let api: MountProps['api'];
   export let data: MountProps['data'];
@@ -13,8 +14,10 @@
   });
 </script>
 
-<div class="grid gap-2 text-sm">
-  <ul class="grid divide-black/50 divide-y">
+<Logo className="mx-auto mt-4 mb-2" />
+<div class="grid gap-2 text-sm mb-10">
+  <h2 class="uppercase text-center my-2 text-[1.3rem]">Review your order</h2>
+  <ul class="grid gap-2">
     {#each data.order.cart.items as item}
       <CartItem {item} {api} {data} {track} />
     {/each}

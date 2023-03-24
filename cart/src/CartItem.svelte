@@ -26,96 +26,98 @@
       total = item.total.includingVat;
     }
   }
+
+  const { id, ...variantData } = item.attributes?.productVariant || {};
+  const variant = Object.values(variantData).join(' - ');
+
+  let imageError = false;
 </script>
 
-<li class="flex gap-4 py-4">
-  <img
-    src={item.imageUrl}
-    alt={item.name}
-    class="w-40 h-full object-contain rounded"
-  />
+<li class="flex gap-4 p-2 h-36 bg-white text-xs">
+  {#if item.imageUrl && !imageError}
+    <img
+      src={item.imageUrl}
+      alt={imageError ? 'No image available' : item.name}
+      class="object-contain aspect-[2/3] h-full bg-[#f7f7f7]"
+      on:error={() => {
+        imageError = true;
+      }}
+    />
+  {:else}
+    <div
+      class="aspect-[2/3] h-full flex items-center text-center bg-[#f7f7f7] text-sm capitalize"
+    >
+      Image not found
+    </div>
+  {/if}
 
   <!-- Item details -->
-  <div class="grid flex-1">
-    <div class="grid gap-4 self-start">
-      <h2>{item.name}</h2>
-
-      <div class="flex gap-1 items-center">
-        <button
-          class="py-1 px-2 -my-1 -ml-2"
-          on:click={() => {
-            quantity = quantity + 1;
-            api.updateItem({
-              itemReference: item.reference,
-              quantity: String(quantity),
-            });
-            track(TrackingEvents.AddToCart, {
-              items: [convertItemToGA4Item({ ...item, quantity: quantity })],
-              currency: data.order.currency,
-              value: item.price?.includingVat,
-            });
-          }}
-          >&plus;
-        </button>
-        <span>{quantity}</span>
-        <button
-          class="py-1 px-2 -my-1"
-          on:click={() => {
-            quantity = quantity - 1;
-            api.updateItem({
-              itemReference: item.reference,
-              quantity: String(quantity),
-            });
-            track(TrackingEvents.RemoveFromCart, {
-              items: [convertItemToGA4Item({ ...item, quantity: quantity })],
-              currency: data.order.currency,
-              value: item.price?.includingVat,
-            });
-          }}
-          >&minus;
-        </button>
-      </div>
-
-      {#each Object.entries(item.attributes.productVariant || {}) as [key, value]}
-        {#if key !== 'id'}
-          <span>
-            {`${key} - ${value}`}
-          </span>
+  <div class="grid grid-cols-3 w-full">
+    <div class="grid gap-2 content-center">
+      <a href={item.url} class="hover:underline underline-offset-4">
+        {#if variant}
+          <h2>{item.name} - {variant}</h2>
+        {:else}
+          <h2>{item.name}</h2>
         {/if}
-      {/each}
+      </a>
 
-      {#if typeof item.attributes.STOCK_LEVEL === 'number'}
-        <div class="flex gap-2 items-center">
-          {#if item.attributes.STOCK_LEVEL > 0}
-            <span class="w-2 h-2 rounded-full bg-green-600" />
-            {t('Instant shipping')}
-          {:else}
-            <span>What to display here?</span>
-          {/if}
-        </div>
-      {/if}
+      <span class="text-xs">Article number: {item.sku}</span>
     </div>
-  </div>
 
-  <!-- Price / Remove -->
-  <div class="grid gap-4 flex-0 self-start justify-items-end">
-    <span class={pulsingClass}>
-      {formatter.format(total)}
-    </span>
+    <!-- Price / Quantity -->
+    <div class="flex items-center gap-2">
+      <span>{formatter.format(item.price.includingVat)}/pcs</span>
+      <button
+        class="h-6 w-6 bg-[#f7f7f7]"
+        on:click={() => {
+          quantity = quantity - 1;
+          api.updateItem({
+            itemReference: item.reference,
+            quantity: String(quantity),
+          });
+          track(TrackingEvents.RemoveFromCart, {
+            items: [convertItemToGA4Item({ ...item, quantity: quantity })],
+            currency: data.order.currency,
+            value: item.price?.includingVat,
+          });
+        }}
+        >&minus;
+      </button>
+      <span>{quantity}</span>
+      <button
+        class="h-6 w-6 bg-[#f7f7f7]"
+        on:click={() => {
+          quantity = quantity + 1;
+          api.updateItem({
+            itemReference: item.reference,
+            quantity: String(quantity),
+          });
+          track(TrackingEvents.AddToCart, {
+            items: [convertItemToGA4Item({ ...item, quantity: quantity })],
+            currency: data.order.currency,
+            value: item.price?.includingVat,
+          });
+        }}
+        >&plus;
+      </button>
+    </div>
 
-    <button
-      class="underline underline-offset-4"
-      disabled={api.state === 'pending'}
-      on:click={() => {
-        api.deleteItem(item.reference);
-        track(TrackingEvents.RemoveFromCart, {
-          items: [convertItemToGA4Item({ ...item, quantity: 0 })],
-          currency: data.order.currency,
-          value: item.price?.includingVat,
-        });
-      }}
-    >
-      {t('Remove')}
-    </button>
+    <!-- Total -->
+    <div class="flex items-center gap-2">
+      <div class="grid gap-2 flex-1 text-end">
+        <span class="text-sm">{formatter.format(total)}</span>
+        {#each item.discounts as discount}
+          <span class="text-green-800">
+            {discount.name}: -{formatter.format(discount.value.includingVat)}
+          </span>
+        {/each}
+      </div>
+      <button
+        class="h-5 w-5 text-[#f7f7f7] hover:text-red-700 text-lg leading-none"
+      >
+        &times;
+      </button>
+    </div>
   </div>
 </li>
