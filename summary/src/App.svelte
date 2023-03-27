@@ -54,8 +54,6 @@
     api.state === 'pending'
       ? 'text-transparent bg-black/20 rounded animate-pulse'
       : '';
-
-  $: console.log('api.response', api.response);
 </script>
 
 <div class="grid gap-2 mb-5">
