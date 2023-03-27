@@ -25,7 +25,7 @@
 <span>{formatter.format(item.price.includingVat)}/pcs</span>
 <div class="flex gap-0.5">
   <button
-    class="h-6 w-6 bg-[#f7f7f7]"
+    class="h-6 w-6 bg-[#f7f7f7] disabled:cursor-not-allowed font-mono text-sm"
     on:click={() => {
       quantity = quantity - 1;
       api.updateItem({
@@ -38,13 +38,16 @@
         value: item.price?.includingVat,
       });
     }}
+    disabled={quantity <= 1 ? true : false}
     >&minus;
   </button>
-  <span class="bg-[#f7f7f7] h-6 w-6 flex items-center justify-center">
+  <span
+    class="bg-[#f7f7f7] h-6 w-6 flex items-center justify-center text-lg leading-none"
+  >
     {quantity}
   </span>
   <button
-    class="h-6 w-6 bg-[#f7f7f7]"
+    class="h-6 w-6 bg-[#f7f7f7] font-mono text-sm"
     on:click={() => {
       quantity = quantity + 1;
       api.updateItem({

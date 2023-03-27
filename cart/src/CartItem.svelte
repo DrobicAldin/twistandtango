@@ -32,20 +32,22 @@
   let imageError = false;
 </script>
 
-<li class="flex gap-4 p-2 bg-white text-[10px]">
+<li class="flex gap-4 p-2 bg-white leading-none">
   <div class="aspect-[2/3] w-1/4 md:h-36 md:w-auto">
     {#if item.imageUrl && !imageError}
-      <img
-        src={item.imageUrl}
-        alt={item.name}
-        class="object-contain bg-[#f7f7f7]"
-        on:error={() => {
-          imageError = true;
-        }}
-      />
+      <a href={item.imageUrl} target="_blank">
+        <img
+          src={item.imageUrl.replace('original', 'thumbs')}
+          alt={item.name}
+          class="object-contain bg-[#f7f7f7]"
+          on:error={() => {
+            imageError = true;
+          }}
+        /></a
+      >
     {:else}
       <div
-        class="flex items-center text-center justify-center text-xs capitalize bg-[#f7f7f7] h-full"
+        class="flex items-center text-center justify-center text-lg capitalize bg-[#f7f7f7] w-full aspect-[2/3]"
       >
         Image <br />not found
       </div>
@@ -67,14 +69,16 @@
 
       <span class="text-xs hidden md:block">Article number: {item.sku}</span>
 
-      <div class="self-start gap-1 max-h-36 flex flex-col md:hidden">
+      <div
+        class="self-start gap-1 max-h-36 flex flex-col md:hidden leading-none"
+      >
         <Quantity {item} {api} {track} {data} />
       </div>
     </div>
 
     <!-- Price / Quantity -->
     <div
-      class="items-center justify-center self-start gap-2 max-h-36 hidden md:flex pt-3"
+      class="items-center justify-center self-start gap-2 max-h-36 hidden md:flex pt-3 leading-none"
     >
       <Quantity {item} {api} {track} {data} />
     </div>
@@ -82,7 +86,7 @@
     <!-- Total -->
     <div class="flex flex-col md:flex-row items-end md:items-start gap-2">
       <button
-        class="h-5 w-5 text-zinc-300 hover:text-red-700 text-lg leading-none md:self-center md:order-2"
+        class="h-5 w-5 text-zinc-300 hover:text-red-700 text-base leading-none md:self-center md:order-2 font-mono"
       >
         &times;
       </button>
