@@ -15,7 +15,7 @@
 </script>
 
 <Logo className="mx-auto mt-4 mb-2" />
-<div class="grid gap-2 text-lg mb-10">
+<div class="grid gap-2 text-lg">
   <h2 class="uppercase text-center my-2 text-[1.3rem]">Review your order</h2>
   <ul class="grid gap-2">
     {#each data.order.cart.items as item}
