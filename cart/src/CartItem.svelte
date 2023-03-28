@@ -1,8 +1,6 @@
 <script lang="ts">
   import type { MountProps } from '@norce/module-adapter-svelte';
-  import { createFormatter, convertItemToGA4Item } from '@norce/checkout-lib';
-  import { t } from './translations';
-  import { TrackingEvents } from '@norce/analytics';
+  import { createFormatter } from '@norce/checkout-lib';
   import Quantity from './Quantity.svelte';
   export let item: MountProps['data']['order']['cart']['items'][number];
   export let api: MountProps['api'];
@@ -94,7 +92,7 @@
         class="grid gap-2 flex-1 text-end justify-end md:order-1 md:content-start content-end"
       >
         <span class={`${pulsingClass}`}>{formatter.format(total)}</span>
-        {#each item.discounts as discount}
+        {#each item.discounts || [] as discount}
           <span class="text-green-800 hidden md:block">
             {discount.name}:
             <span class={`${pulsingClass}`}>
@@ -106,7 +104,7 @@
     </div>
 
     <div class="md:hidden text-end content-end col-span-full">
-      {#each item.discounts as discount}
+      {#each item.discounts || [] as discount}
         <span class="text-green-800">
           {discount.name}:
           <span class={`${pulsingClass}`}>

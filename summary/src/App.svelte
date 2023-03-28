@@ -91,7 +91,7 @@
 
     <div class="grid gap-1 text-lg leading-none mt-2">
       <h3 class="font-bold">Active discounts</h3>
-      {#each data.order?.cart?.discounts as discount}
+      {#each data.order?.cart?.discounts || [] as discount}
         <div class="flex items-center justify-between group">
           <div class="flex items-center">
             <span>{discount.name}</span>
@@ -124,7 +124,7 @@
     <div class="flex items-center justify-between">
       <span>Freight charge:</span>
       <span class={pulsingClass}>
-        {formatter.format(totalShipping([...data.order.shippings]))}
+        {formatter.format(totalShipping([...(data.order.shippings || [])]))}
       </span>
     </div>
 
