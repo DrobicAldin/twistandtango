@@ -1,5 +1,11 @@
 # @twistandtango/cart
 
+## 0.0.11
+
+### Patch Changes
+
+- aaae294: add nullcheck
+
 ## 0.0.10
 
 ### Patch Changes
