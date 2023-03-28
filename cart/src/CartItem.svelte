@@ -9,7 +9,7 @@
   export let data: MountProps['data'];
   export let track: MountProps['track'];
 
-  const formatter = createFormatter(data.order.culture, data.order.currency);
+  const formatter = createFormatter('sv-SE', data.order.currency);
 
   $: pulsingClass =
     api.state === 'pending'

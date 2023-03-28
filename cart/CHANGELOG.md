@@ -1,5 +1,11 @@
 # @twistandtango/cart
 
+## 0.0.10
+
+### Patch Changes
+
+- change formatter to sv-SE
+
 ## 0.0.9
 
 ### Patch Changes
