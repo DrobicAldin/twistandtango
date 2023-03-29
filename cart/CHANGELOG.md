@@ -1,5 +1,11 @@
 # @twistandtango/cart
 
+## 0.0.13
+
+### Patch Changes
+
+- disable delete when only 1 item
+
 ## 0.0.12
 
 ### Patch Changes

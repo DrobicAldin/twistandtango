@@ -84,7 +84,8 @@
     <!-- Total -->
     <div class="flex flex-col md:flex-row items-end md:items-start gap-2">
       <button
-        class="h-5 w-5 text-zinc-300 hover:text-red-700 text-base leading-none md:self-center md:order-2 font-mono"
+        class="h-5 w-5 text-zinc-300 hover:text-red-700 text-base leading-none md:self-center md:order-2 font-mono disabled:cursor-not-allowed disabled:hover:text-zinc-300"
+        disabled={data?.order?.cart?.items?.length === 1}
         on:click={() => {
           api.deleteItem(item.reference);
           track('remove_from_cart', {
