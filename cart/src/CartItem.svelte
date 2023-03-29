@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { MountProps } from '@norce/module-adapter-svelte';
-  import { createFormatter } from '@norce/checkout-lib';
+  import { convertItemToGA4Item, createFormatter } from '@norce/checkout-lib';
   import Quantity from './Quantity.svelte';
   export let item: MountProps['data']['order']['cart']['items'][number];
   export let api: MountProps['api'];
@@ -85,6 +85,14 @@
     <div class="flex flex-col md:flex-row items-end md:items-start gap-2">
       <button
         class="h-5 w-5 text-zinc-300 hover:text-red-700 text-base leading-none md:self-center md:order-2 font-mono"
+        on:click={() => {
+          api.deleteItem(item.reference);
+          track('remove_from_cart', {
+            items: [convertItemToGA4Item(item)],
+            currency: data.order.currency,
+            value: item.price?.includingVat,
+          });
+        }}
       >
         &times;
       </button>
