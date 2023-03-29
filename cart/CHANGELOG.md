@@ -1,5 +1,11 @@
 # @twistandtango/cart
 
+## 0.0.12
+
+### Patch Changes
+
+- ada350d: add delete on:click
+
 ## 0.0.11
 
 ### Patch Changes
