@@ -1,5 +1,11 @@
 # @twistandtango/cart
 
+## 0.0.15
+
+### Patch Changes
+
+- 85d1ef6: implement feedback
+
 ## 0.0.14
 
 ### Patch Changes
