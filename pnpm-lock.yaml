@@ -12,8 +12,8 @@ importers:
     specifiers:
       '@changesets/cli': ^2.26.1
       '@norce/analytics': latest
-      '@norce/checkout-lib': 0.1.0-pre.15
-      '@norce/module-adapter-svelte': latest
+      '@norce/checkout-lib': 0.1.0-pre.16
+      '@norce/module-adapter-svelte': 2.0.0-pre.19
       '@sveltejs/vite-plugin-svelte': ^2.0.3
       '@tsconfig/svelte': ^3.0.0
       autoprefixer: ^10.4.14
@@ -37,8 +37,8 @@ importers:
     devDependencies:
       '@changesets/cli': 2.26.1
       '@norce/analytics': 1.4.0_p2rzm2mkm3igmssy2ggu32i4qi
-      '@norce/checkout-lib': 0.1.0-pre.15_zod@3.21.4
-      '@norce/module-adapter-svelte': 2.0.0-pre.18_trzscakfbbzko2mitvpptnupgi
+      '@norce/checkout-lib': 0.1.0-pre.16_zod@3.21.4
+      '@norce/module-adapter-svelte': 2.0.0-pre.19_iayhmo2eqn3yxjecoldit7ingu
       '@sveltejs/vite-plugin-svelte': 2.0.3_svelte@3.57.0+vite@4.2.1
       '@tsconfig/svelte': 3.0.0
       autoprefixer: 10.4.14_postcss@8.4.21
@@ -64,8 +64,8 @@ importers:
     specifiers:
       '@changesets/cli': ^2.26.1
       '@norce/analytics': latest
-      '@norce/checkout-lib': 0.1.0-pre.15
-      '@norce/module-adapter-svelte': latest
+      '@norce/checkout-lib': 0.1.0-pre.16
+      '@norce/module-adapter-svelte': 2.0.0-pre.19
       '@sveltejs/vite-plugin-svelte': ^2.0.3
       '@tsconfig/svelte': ^3.0.0
       autoprefixer: ^10.4.14
@@ -89,8 +89,8 @@ importers:
     devDependencies:
       '@changesets/cli': 2.26.1
       '@norce/analytics': 1.4.0_p2rzm2mkm3igmssy2ggu32i4qi
-      '@norce/checkout-lib': 0.1.0-pre.15_zod@3.21.4
-      '@norce/module-adapter-svelte': 2.0.0-pre.18_trzscakfbbzko2mitvpptnupgi
+      '@norce/checkout-lib': 0.1.0-pre.16_zod@3.21.4
+      '@norce/module-adapter-svelte': 2.0.0-pre.19_iayhmo2eqn3yxjecoldit7ingu
       '@sveltejs/vite-plugin-svelte': 2.0.3_svelte@3.57.0+vite@4.2.1
       '@tsconfig/svelte': 3.0.0
       autoprefixer: 10.4.14_postcss@8.4.21
@@ -567,8 +567,8 @@ packages:
       uuid: 9.0.0
     dev: true
 
-  /@norce/checkout-lib/0.1.0-pre.15_zod@3.21.4:
-    resolution: {integrity: sha512-/XfC8LriZ8bntlsud/UfAfKG8lIuRcl1c4MdtHTORd3uzW62v2aWFoK0ewG3VHPDWzZsTLIUPP08H2FzE/+9UQ==}
+  /@norce/checkout-lib/0.1.0-pre.16_zod@3.21.4:
+    resolution: {integrity: sha512-gaRjlDqLGhwUlT4ExpmOuNqipzZ7hHJuVR48EWLJJ3gcDhJu73dYk1h7t6iK0KoB2bcJMNQieNdlWZ5R7aCo/w==}
     peerDependencies:
       zod: ^3.x.x
     dependencies:
@@ -576,13 +576,13 @@ packages:
       zod: 3.21.4
     dev: true
 
-  /@norce/module-adapter-svelte/2.0.0-pre.18_trzscakfbbzko2mitvpptnupgi:
-    resolution: {integrity: sha512-WoS206y+L2art7uhTQsHhCnv/G713sYLS+02eDzAarUFtIID21hzGIxFc9do01H30RFUb3F3FlhuH9gxPLrdFw==}
+  /@norce/module-adapter-svelte/2.0.0-pre.19_iayhmo2eqn3yxjecoldit7ingu:
+    resolution: {integrity: sha512-bTbGmhPHVC4MXerbpQ+FPN1ptm98yDUMWjgBtXQAxBRVSdqf916PNqBIFJnXt0S6YRg89/HlpQ+mkFfLMpG+rA==}
     peerDependencies:
-      '@norce/checkout-lib': ^0.1.0-pre.12
+      '@norce/checkout-lib': ^0.1.0-pre.16
       svelte: ^3.x.x
     dependencies:
-      '@norce/checkout-lib': 0.1.0-pre.15_zod@3.21.4
+      '@norce/checkout-lib': 0.1.0-pre.16_zod@3.21.4
       svelte: 3.57.0
     dev: true
 

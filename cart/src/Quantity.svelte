@@ -3,9 +3,11 @@
   import {
     convertItemToGA4Item,
     createFormatter,
+    PlatformAdapters,
     type MountProps,
+    type PlatformItem,
   } from '@norce/checkout-lib';
-  export let item: MountProps['data']['order']['cart']['items'][number];
+  export let item: PlatformItem<PlatformAdapters.Jetshop>;
   export let api: MountProps['api'];
   export let data: MountProps['data'];
   export let track: MountProps['track'];

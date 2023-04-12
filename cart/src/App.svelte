@@ -4,10 +4,15 @@
   import { onMount } from 'svelte';
   import { culture } from './translations';
   import Logo from './Logo.svelte';
+  import type { PlatformAdapters, PlatformItem } from '@norce/checkout-lib';
 
   export let api: MountProps['api'];
   export let data: MountProps['data'];
   export let track: MountProps['track'];
+
+  $: items = (data.order?.cart?.items || []) as unknown as
+    | PlatformItem<PlatformAdapters.Jetshop>[]
+    | undefined;
 
   onMount(() => {
     culture.set(data.order.culture);
@@ -20,7 +25,7 @@
 <div class="grid gap-2 text-lg">
   <h2 class="uppercase text-center my-2 text-[1.3rem]">Review your order</h2>
   <ul class="grid gap-2">
-    {#each data.order?.cart?.items || [] as item}
+    {#each items as item}
       <CartItem {item} {api} {data} {track} />
     {/each}
   </ul>

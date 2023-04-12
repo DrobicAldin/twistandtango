@@ -14,8 +14,8 @@
   "devDependencies": {
     "@changesets/cli": "^2.26.1",
     "@norce/analytics": "latest",
-    "@norce/checkout-lib": "0.1.0-pre.15",
-    "@norce/module-adapter-svelte": "latest",
+    "@norce/checkout-lib": "0.1.0-pre.16",
+    "@norce/module-adapter-svelte": "2.0.0-pre.19",
     "@sveltejs/vite-plugin-svelte": "^2.0.3",
     "@tsconfig/svelte": "^3.0.0",
     "autoprefixer": "^10.4.14",

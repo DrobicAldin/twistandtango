@@ -1,8 +1,14 @@
 <script lang="ts">
   import type { MountProps } from '@norce/module-adapter-svelte';
-  import { convertItemToGA4Item, createFormatter } from '@norce/checkout-lib';
+  import {
+    convertItemToGA4Item,
+    createFormatter,
+    getItemBuyableState,
+    PlatformAdapters,
+  } from '@norce/checkout-lib';
+  import type { PlatformItem } from '@norce/checkout-lib';
   import Quantity from './Quantity.svelte';
-  export let item: MountProps['data']['order']['cart']['items'][number];
+  export let item: PlatformItem<PlatformAdapters.Jetshop>;
   export let api: MountProps['api'];
   export let data: MountProps['data'];
   export let track: MountProps['track'];
@@ -27,10 +33,23 @@
   const { id, ...variantData } = item.attributes?.productVariant || {};
   const variant = Object.values(variantData).join(' - ');
 
+  $: itemStatus = getItemBuyableState(item);
+
   let imageError = false;
 </script>
 
-<li class="flex gap-4 p-2 bg-white leading-none">
+<li
+  class={`flex gap-4 p-2 bg-white leading-none relative ${
+    itemStatus !== 'buyable' ? 'border border-red-600' : ''
+  }`}
+>
+  {#if itemStatus !== 'buyable'}
+    <div
+      class="absolute top-0 rounded px-1 -translate-y-1/2 right-4 md:right-8 bg-white border border-red-600 text-xs capitalize leading-[1.1]"
+    >
+      {itemStatus.replace(/-/g, ' ')}
+    </div>
+  {/if}
   <div class="aspect-[2/3] w-1/4 md:h-36 md:w-auto">
     {#if item.imageUrl && !imageError}
       <a href={item.imageUrl} target="_blank">

@@ -4,6 +4,7 @@
     type JetshopDiscountResponse,
     totalShipping,
     calculateTaxAmount,
+    totalDiscountedAmount,
   } from '@norce/checkout-lib';
   import type { MountProps } from '@norce/module-adapter-svelte';
   import { onMount } from 'svelte';
@@ -11,7 +12,7 @@
 
   export let api: MountProps['api'];
   export let data: MountProps['data'];
-  // export let track: MountProps['track'];
+  export let track: MountProps['track'];
 
   let formEl: HTMLFormElement;
   const formatter = createFormatter('sv-SE', data.order.currency);
@@ -54,47 +55,81 @@
     api.state === 'pending'
       ? 'text-transparent bg-black/20 rounded animate-pulse'
       : '';
+
+  let showDiscount = false;
 </script>
 
 <div class="grid gap-2 mb-5">
   <!-- Discount -->
   <div class="bg-white p-5 grid gap-2">
-    <form bind:this={formEl} on:submit={handleAddDiscount} class="contents">
-      <label class="block underline underline-offset-4" for="discountCode">
+    {#if !showDiscount}
+      <button
+        class="flex underline underline-offset-4"
+        on:click={() => (showDiscount = true)}
+      >
         Enter discount code
-      </label>
-      <div class="flex md:w-64">
-        <input
-          id="discountCode"
-          type="text"
-          name="discountCode"
-          placeholder="Enter your code here and click OK"
-          class="flex-1 py-1 border border-r-0 border-zinc-400 outline-none pl-2 placeholder:opacity-50"
-          required
-        />
-        <button
-          type="submit"
-          class="inline-flex items-center justify-center bg-zinc-500 text-white px-2 hover:bg-zinc-600 focus-visible:bg-zinc-600"
+      </button>
+    {:else}
+      <form bind:this={formEl} on:submit={handleAddDiscount} class="contents">
+        <!-- They really wanted this even though it's bad -->
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <label
+          class="block underline underline-offset-4"
+          for="discountCode"
+          on:click={() => (showDiscount = false)}
         >
-          OK
-        </button>
-      </div>
+          Enter discount code
+        </label>
+        <div class="flex md:w-64">
+          <input
+            id="discountCode"
+            type="text"
+            name="discountCode"
+            placeholder="Enter your code here and click OK"
+            class="flex-1 py-1 border border-r-0 border-zinc-400 outline-none pl-2 placeholder:opacity-50"
+            required
+          />
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center bg-zinc-500 text-white px-2 hover:bg-zinc-600 focus-visible:bg-zinc-600"
+          >
+            OK
+          </button>
+        </div>
 
-      {#if formError?.fields?.discountCode}
-        <span
-          class="justify-self-start bg-red-200 border border-red-600 px-2 py-1 my-1"
-        >
-          {formError.fields.discountCode}
-        </span>
-      {/if}
-    </form>
+        {#if formError?.fields?.discountCode}
+          <span
+            class="justify-self-start bg-red-200 border border-red-600 px-2 py-1 my-1"
+          >
+            {formError.fields.discountCode}
+          </span>
+        {/if}
+      </form>
+    {/if}
 
-    <div class="grid gap-1 text-lg leading-none mt-2">
+    <div class="grid gap-1 text-lg leading-none my-2">
       <h3 class="font-bold">Active discounts</h3>
       {#each data.order?.cart?.discounts || [] as discount}
         <div class="flex items-center justify-between group">
           <div class="flex items-center">
-            <span>{discount.name}</span>
+            <span class="flex items-center gap-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 inline text-green-700"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4.5 12.75l6 6 9-13.5"
+                />
+              </svg>
+
+              {discount.name}
+            </span>
             {#if discount.code}
               <button
                 class="ml-2 px-1 text-zinc-300 md:hidden group-hover:block hover:text-red-700 font-mono leading-none"
@@ -109,6 +144,12 @@
           </span>
         </div>
       {/each}
+    </div>
+    <div class="flex font-bold text-lg leading-none">
+      <span class="flex-1">Total discount</span>
+      <span class={pulsingClass}>
+        {formatter.format(totalDiscountedAmount(data.order?.cart?.discounts))}
+      </span>
     </div>
   </div>
 
