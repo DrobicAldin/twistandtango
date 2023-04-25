@@ -1,5 +1,11 @@
 # @twistandtango/summary
 
+## 0.0.10
+
+### Patch Changes
+
+- 386cb71: only display discounts when they exist
+
 ## 0.0.9
 
 ### Patch Changes
