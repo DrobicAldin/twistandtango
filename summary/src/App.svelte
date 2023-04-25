@@ -107,50 +107,52 @@
       </form>
     {/if}
 
-    <div class="grid gap-1 text-lg leading-none my-2">
-      <h3 class="font-bold">Active discounts</h3>
-      {#each data.order?.cart?.discounts || [] as discount}
-        <div class="flex items-center justify-between group">
-          <div class="flex items-center">
-            <span class="flex items-center gap-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5 inline text-green-700"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M4.5 12.75l6 6 9-13.5"
-                />
-              </svg>
+    {#if data.order?.cart?.discounts && data.order?.cart?.discounts.length > 0}
+      <div class="grid gap-1 text-lg leading-none my-2">
+        <h3 class="font-bold">Active discounts</h3>
+        {#each data.order?.cart?.discounts || [] as discount}
+          <div class="flex items-center justify-between group">
+            <div class="flex items-center">
+              <span class="flex items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 inline text-green-700"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M4.5 12.75l6 6 9-13.5"
+                  />
+                </svg>
 
-              {discount.name}
+                {discount.name}
+              </span>
+              {#if discount.code}
+                <button
+                  class="ml-2 px-1 text-zinc-300 md:hidden group-hover:block hover:text-red-700 font-mono leading-none"
+                  on:click={() => api.removeDiscount(discount.code)}
+                >
+                  &times;
+                </button>
+              {/if}
+            </div>
+            <span class={pulsingClass}>
+              - {formatter.format(discount.value.includingVat)}
             </span>
-            {#if discount.code}
-              <button
-                class="ml-2 px-1 text-zinc-300 md:hidden group-hover:block hover:text-red-700 font-mono leading-none"
-                on:click={() => api.removeDiscount(discount.code)}
-              >
-                &times;
-              </button>
-            {/if}
           </div>
-          <span class={pulsingClass}>
-            - {formatter.format(discount.value.includingVat)}
-          </span>
-        </div>
-      {/each}
-    </div>
-    <div class="flex font-bold text-lg leading-none">
-      <span class="flex-1">Total discount</span>
-      <span class={pulsingClass}>
-        {formatter.format(totalDiscountedAmount(data.order?.cart?.discounts))}
-      </span>
-    </div>
+        {/each}
+      </div>
+      <div class="flex font-bold text-lg leading-none">
+        <span class="flex-1">Total discount</span>
+        <span class={pulsingClass}>
+          {formatter.format(totalDiscountedAmount(data.order?.cart?.discounts))}
+        </span>
+      </div>
+    {/if}
   </div>
 
   <!-- Summary -->
