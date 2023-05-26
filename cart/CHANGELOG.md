@@ -1,5 +1,11 @@
 # @twistandtango/cart
 
+## 0.0.16
+
+### Patch Changes
+
+- 5bfe924: externalize zod
+
 ## 0.0.15
 
 ### Patch Changes

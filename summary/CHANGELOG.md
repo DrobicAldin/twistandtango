@@ -1,5 +1,11 @@
 # @twistandtango/summary
 
+## 0.0.11
+
+### Patch Changes
+
+- 5bfe924: externalize zod
+
 ## 0.0.10
 
 ### Patch Changes
