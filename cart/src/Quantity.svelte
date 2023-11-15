@@ -1,24 +1,23 @@
 <script lang="ts">
-  import { TrackingEvents } from '@norce/analytics';
-  import {
-    convertItemToGA4Item,
-    createFormatter,
+  import { TrackingEvents } from "@norce/analytics";
+  import { convertItemToGA4Item, createFormatter } from "@norce/checkout-lib";
+  import type {
+    MountProps,
+    PlatformItem,
     PlatformAdapters,
-    type MountProps,
-    type PlatformItem,
-  } from '@norce/checkout-lib';
-  export let item: PlatformItem<PlatformAdapters.Jetshop>;
-  export let api: MountProps['api'];
-  export let data: MountProps['data'];
-  export let track: MountProps['track'];
+  } from "@norce/checkout-lib";
+  export let item: PlatformItem<typeof PlatformAdapters.Jetshop>;
+  export let api: MountProps["api"];
+  export let data: MountProps["data"];
+  export let track: MountProps["track"];
 
-  const formatter = createFormatter('sv-SE', data.order.currency);
+  const formatter = createFormatter("sv-SE", data.order.currency);
   let quantity = item.quantity;
 
   // Reset pending UI when state is idle
   // this must be done since a request could fail
   $: {
-    if (api.state === 'idle') {
+    if (api.state === "idle") {
       quantity = item.quantity;
     }
   }

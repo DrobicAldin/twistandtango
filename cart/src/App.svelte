@@ -1,17 +1,17 @@
 <script lang="ts">
-  import type { MountProps } from '@norce/module-adapter-svelte';
-  import CartItem from './CartItem.svelte';
-  import { onMount } from 'svelte';
-  import { culture } from './translations';
-  import Logo from './Logo.svelte';
-  import type { PlatformAdapters, PlatformItem } from '@norce/checkout-lib';
+  import type { MountProps } from "@norce/module-adapter-svelte";
+  import CartItem from "./CartItem.svelte";
+  import { onMount } from "svelte";
+  import { culture } from "./translations";
+  import Logo from "./Logo.svelte";
+  import type { PlatformItem, PlatformAdapters } from "@norce/checkout-lib";
 
-  export let api: MountProps['api'];
-  export let data: MountProps['data'];
-  export let track: MountProps['track'];
+  export let api: MountProps["api"];
+  export let data: MountProps["data"];
+  export let track: MountProps["track"];
 
   $: items = (data.order?.cart?.items || []) as unknown as
-    | PlatformItem<PlatformAdapters.Jetshop>[]
+    | PlatformItem<typeof PlatformAdapters.Jetshop>[]
     | undefined;
 
   onMount(() => {
@@ -32,7 +32,7 @@
 </div>
 
 <style global lang="postcss">
-  @import 'tailwindcss/base';
-  @import 'tailwindcss/components';
-  @import 'tailwindcss/utilities';
+  @import "tailwindcss/base";
+  @import "tailwindcss/components";
+  @import "tailwindcss/utilities";
 </style>

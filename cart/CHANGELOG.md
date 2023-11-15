@@ -1,5 +1,11 @@
 # @twistandtango/cart
 
+## 0.0.17
+
+### Patch Changes
+
+- update deps
+
 ## 0.0.16
 
 ### Patch Changes

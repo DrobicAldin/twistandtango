@@ -1,21 +1,21 @@
 <script lang="ts">
   import {
     createFormatter,
-    type JetshopDiscountResponse,
     totalShipping,
     calculateTaxAmount,
     totalDiscountedAmount,
-  } from '@norce/checkout-lib';
-  import type { MountProps } from '@norce/module-adapter-svelte';
-  import { onMount } from 'svelte';
-  import { culture } from './translations';
+  } from "@norce/checkout-lib";
+  import type { JetshopDiscountResponse } from "@norce/checkout-lib";
+  import type { MountProps } from "@norce/module-adapter-svelte";
+  import { onMount } from "svelte";
+  import { culture } from "./translations";
 
-  export let api: MountProps['api'];
-  export let data: MountProps['data'];
-  export let track: MountProps['track'];
+  export let api: MountProps["api"];
+  export let data: MountProps["data"];
+  export let track: MountProps["track"];
 
   let formEl: HTMLFormElement;
-  const formatter = createFormatter('sv-SE', data.order.currency);
+  const formatter = createFormatter("sv-SE", data.order.currency);
 
   onMount(() => {
     culture.set(data.order.culture);
@@ -30,21 +30,21 @@
   ) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const code = formData.get('discountCode') as string;
+    const code = formData.get("discountCode") as string;
     api.applyDiscount(code);
   };
 
   $: formError =
-    api.response?.error?.__type === 'FormError'
+    api.response?.error?.__type === "FormError"
       ? (api.response.error as Extract<
-          JetshopDiscountResponse['error'],
-          { __type: 'FormError' }
+          JetshopDiscountResponse["error"],
+          { __type: "FormError" }
         >)
       : undefined;
   $: {
     const successToast =
-      api.response?.error?.__type === 'ToastError' &&
-      api.response?.error?.variant === 'success'
+      api.response?.error?.__type === "ToastError" &&
+      api.response?.error?.variant === "success"
         ? api.response.error
         : undefined;
     if (successToast) {
@@ -52,9 +52,9 @@
     }
   }
   $: pulsingClass =
-    api.state === 'pending'
-      ? 'text-transparent bg-black/20 rounded animate-pulse'
-      : '';
+    api.state === "pending"
+      ? "text-transparent bg-black/20 rounded animate-pulse"
+      : "";
 
   let showDiscount = false;
 </script>
@@ -62,25 +62,19 @@
 <div class="grid gap-2 mb-5">
   <!-- Discount -->
   <div class="bg-white p-5 grid gap-2">
-    {#if !showDiscount}
-      <button
-        class="flex underline underline-offset-4"
-        on:click={() => (showDiscount = true)}
-      >
-        Enter discount code
-      </button>
-    {:else}
+    <button
+      class="flex underline underline-offset-4"
+      on:click={() => (showDiscount = !showDiscount)}
+      aria-label={showDiscount
+        ? "Hide discount code input"
+        : "Show discount code input"}
+    >
+      Enter discount code
+    </button>
+    {#if showDiscount}
       <form bind:this={formEl} on:submit={handleAddDiscount} class="contents">
-        <!-- They really wanted this even though it's bad -->
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <label
-          class="block underline underline-offset-4"
-          for="discountCode"
-          on:click={() => (showDiscount = false)}
-        >
-          Enter discount code
-        </label>
         <div class="flex md:w-64">
+          <label for="discountCode" class="sr-only">Enter discount code</label>
           <input
             id="discountCode"
             type="text"
@@ -190,7 +184,7 @@
 </div>
 
 <style global lang="postcss">
-  @import 'tailwindcss/base';
-  @import 'tailwindcss/components';
-  @import 'tailwindcss/utilities';
+  @import "tailwindcss/base";
+  @import "tailwindcss/components";
+  @import "tailwindcss/utilities";
 </style>
